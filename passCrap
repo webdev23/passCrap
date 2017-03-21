@@ -10,15 +10,24 @@ Dump all passwords from www.mysql-password.com
 * REQUIRE: php, php-curl, php-sqlite3
 *   
 * sudo apt install php php-curl php-sqlite3
+* 
 * sqlite3 multipass.db
 * 
-* Then create a table:
 
 CREATE TABLE Users ( 
   SerialNo INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
   pass TEXT NOT NULL UNIQUE,
   LEN TEXT NOT NULL );
-  
+
+  * Run me: 
+  * 
+  * chmod +X passCrap
+  * ./passCrap
+  * 
+  * Or: 
+  * 
+  * php <(curl -s https://raw.githubusercontent.com/webdev23/passCrap/master/passCrap)
+  * 
   * nk @ https://github.com/webdev23/passCrap
   * ponyhacks.com 2017
 */  
@@ -37,14 +46,28 @@ error_reporting(0);
    if(!$db){
       echo $db->lastErrorMsg();
    } else {
-      echo "Success: multipass.db opened!\n";
+      echo "Success: multipass.db created!\n";
    };
+   
+$sql =<<<EOF
+CREATE TABLE Users ( 
+  SerialNo INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  pass TEXT NOT NULL UNIQUE,
+  LEN TEXT NOT NULL );
+EOF;
+
+   $ret = $db->exec($sql);
+   if(!$ret){
+      echo $db->lastErrorMsg();
+   } else {
+      echo "\nTable created successfully\n";
+   }  
  
 //~ Start page number
 $baseN = 1;
 $base = "http://www.mysql-password.com/database/".$baseN++;
 
-echo "\033[31m Warning: This tool is going to construct a database \n of 2.420.000.000 passwords from www.mysql-password.com/database.
+echo "\n\033[31m Warning: This tool is going to construct a database \n of 2.420.000.000 passwords from www.mysql-password.com/database.
 This database will weight 230 Gigabytes! 
 It can takes weeks and will burn a lot.\n \033[0m
 Continue? [Y/n] ";
@@ -79,8 +102,7 @@ $response = rtrim(fgets(STDIN));
             
             // Max pass chars: 20
              if(preg_match('/\S{20,}/',$ee->item($p)->nodeValue)) { }
-             
-             // Min pass chars: 7             
+             // Min pass chars: 7
                elseif (strlen($ee->item($p)->nodeValue) > 7) {
                   //~ print_r(" ".$ee->item($p)->nodeValue." ");
                 $dbl = new scrapDB(); 
@@ -105,4 +127,5 @@ $response = rtrim(fgets(STDIN));
        echo "### Seeking ###";
        usleep(3000000);
     };
-};  
+};    
+
