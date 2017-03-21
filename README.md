@@ -2,9 +2,10 @@
 <pre><h4>
 Retrieve 2,422,392,161 clear passwords in a 230GB SQLite3 or csv database
 
-<img src="https://media.giphy.com/media/3ohzdQgxboDlOInXTW/giphy.gif"></gif>
+<img src="https://media.giphy.com/media/3ohzdQgxboDlOInXTW/giphy.gif"></img>
+<img width="440" src="https://media.giphy.com/media/3oKIPpMOdFh2k6AaFG/giphy.gif"></img>
 
-### Export to .csv ###
+### Export to .csv [FASTER] ###
 
 chmod +X passCrap
 ./passCrap_csv
