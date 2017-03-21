@@ -111,7 +111,7 @@ $response = rtrim(fgets(STDIN));
                 
                 $sql ="
                 INSERT INTO Users ( pass, LEN)
-                VALUES ( '".$ee->item($p)->nodeValue."', '".$passLength."' );
+                VALUES ( '".$pass."', '".$passLength."' );
                 ";
                 echo "\n";
                 $ret;
