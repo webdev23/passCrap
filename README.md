@@ -1,8 +1,19 @@
 # ./passCrap
 <pre><h4>
-Retrieve 2,422,392,161 clear passwords in a 230GB SQLite3 database
+Retrieve 2,422,392,161 clear passwords in a 230GB SQLite3 or csv database
 
 <img src="https://media.giphy.com/media/3ohzdQgxboDlOInXTW/giphy.gif"></gif>
+
+### Export to .csv ###
+
+chmod +X passCrap
+./passCrap_csv
+
+Or
+
+php <(curl -s https://raw.githubusercontent.com/webdev23/passCrap/master/passCrap_csv)
+
+#### Export to SQLite3: ####
 
 chmod +X passCrap
 ./passCrap
