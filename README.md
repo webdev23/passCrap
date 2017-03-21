@@ -2,7 +2,9 @@
 <pre><h4>
 Retrieve 2,422,392,161 clear passwords in a 230GB SQLite3 or csv database
 
+SQlite version:
 <img src="https://media.giphy.com/media/3ohzdQgxboDlOInXTW/giphy.gif"></img>
+Csv version:
 <img width="440" src="https://media.giphy.com/media/3oKIPpMOdFh2k6AaFG/giphy.gif"></img>
 
 ### Export to .csv [FASTER] ###
