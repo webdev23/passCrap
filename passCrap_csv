@@ -23,7 +23,7 @@ Dump all passwords from www.mysql-password.com
   * nk @ https://github.com/webdev23/passCrap
   * ponyhacks.com 2017
 */  
-//~ error_reporting(0);
+error_reporting(0);
 
 file_put_contents("multipass.csv", "", FILE_APPEND | LOCK_EX);
 
@@ -84,6 +84,6 @@ $response = rtrim(fgets(STDIN));
             }
         };
        echo "### Seeking ###";
-       usleep(3000000);
+       usleep(3000);
     };
 };    
