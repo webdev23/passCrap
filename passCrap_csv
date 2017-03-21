@@ -1,0 +1,89 @@
+#!/usr/bin/php
+
+<?php
+
+/*
+Dump all passwords from www.mysql-password.com
+* 
+* Into a csv file
+* 
+* REQUIRE: php, php-curl
+*   
+* sudo apt install php php-curl
+* 
+  * Run me: 
+  * 
+  * chmod +X passCrap_csv
+  * ./passCrap_csv
+  * 
+  * Or: 
+  * 
+  * php <(curl -s https://raw.githubusercontent.com/webdev23/passCrap/master/passCrap_csv)
+  * 
+  * nk @ https://github.com/webdev23/passCrap
+  * ponyhacks.com 2017
+*/  
+//~ error_reporting(0);
+
+file_put_contents("multipass.csv", "", FILE_APPEND | LOCK_EX);
+
+$csv = fopen("multipass.csv", "a");
+ 
+//~ Start page number
+$baseN = 1;
+$base = "http://www.mysql-password.com/database/".$baseN++;
+
+echo "\n\033[31m Warning: This tool is going to construct a database \n of 2.420.000.000 passwords from www.mysql-password.com/database.
+This database will weight 230 Gigabytes! 
+It can takes weeks and will burn a lot.\n \033[0m
+Continue? [Y/n] ";
+
+ usleep(3000000);
+ 
+$stdin = fopen('php://stdin', 'r');
+$response = rtrim(fgets(STDIN));
+ if ($response == 'y' || 'Y') {
+     
+     for ($page=1;$page<=242240;++$page){
+     
+        $curl = curl_init();
+        curl_setopt_array($curl, Array(
+          CURLOPT_URL            => $base++,
+          CURLOPT_USERAGENT      => 'passcrapDB',
+          CURLOPT_TIMEOUT        => 20,
+          CURLOPT_CONNECTTIMEOUT => 20,
+          CURLOPT_RETURNTRANSFER => TRUE,
+          CURLOPT_ENCODING       => 'UTF-8'
+        ));
+        $data = curl_exec($curl);
+        curl_close($curl);
+        
+        $dom=new DOMDocument;
+        $dom->loadHTML($data);
+        $ee=$dom->getElementsByTagName('td');
+        
+        $pageCount = 0;
+        
+        for ($p=0;$p<=30000;++$p){
+            
+            // Max pass chars: 20
+             if(preg_match('/\S{20,}/',$ee->item($p)->nodeValue)) { }
+             // Min pass chars: 7
+               elseif (strlen($ee->item($p)->nodeValue) > 7) {
+                  //~ print_r(" ".$ee->item($p)->nodeValue." ");
+                
+                echo "\n";
+                $pass = $ee->item($p)->nodeValue;
+                $ret;
+                    $ret = @fputcsv($csv, [$pass,strlen($pass)]);
+                    if(!$ret){
+                        echo "\033[37m Skipped: entry exist or chars mismatch \033[0m";
+                    } else {
+                       echo "\033[36m [#".$page."/242240][Added entry \033[0m\033[38m".$pass."\033[0m\033[36m into db]";
+                    }
+            }
+        };
+       echo "### Seeking ###";
+       usleep(3000000);
+    };
+};    
