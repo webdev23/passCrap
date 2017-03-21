@@ -83,7 +83,7 @@ $response = rtrim(fgets(STDIN));
                     }
             }
         };
-       echo "### Seeking ###";
-       usleep(3000);
+       echo "\n### Seeking ###";
+       usleep(300);
     };
 };    
