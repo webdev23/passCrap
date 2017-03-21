@@ -27,9 +27,9 @@ Dump all passwords from www.mysql-password.com
 * 
 * Into a fresh SQLite3 database
 * 
-* REQUIRE: php, php-curl, php-sqlite3
+* REQUIRE: php, php-curl, php-dom, php-sqlite3
 *   
-* sudo apt install php php-curl php-sqlite3
+* sudo apt install php php-curl php-dom php-sqlite3
 * sqlite3 multipass.db
 * 
 * Create a table: sqlite3 multipass.db
