@@ -7,25 +7,21 @@ SQlite3 version:
 Csv mono thread version:
 <img width="440" src="https://media.giphy.com/media/3oKIPpMOdFh2k6AaFG/giphy.gif"></img>
 Csv multi sub-processus
-<img src="https://media.giphy.com/media/xUPGct38mRrhuDYfWE/giphy.gif"></img>
+<img width="440" src="https://media.giphy.com/media/xUPGct38mRrhuDYfWE/giphy.gif"></img>
 
-### Export to .csv [FASTER] ###
+### Run: ###
 
 chmod +X passCrap
-./passCrap_csv
+./passCrap
 
-Or
-
-php <(curl -s https://raw.githubusercontent.com/webdev23/passCrap/master/passCrap_csv)
-
-#### Export to SQLite3: ####
+#### SQLite3 version: ####
 
 chmod +X passCrap
 ./passCrap
 
 Or 
 
-php <(curl -s https://raw.githubusercontent.com/webdev23/passCrap/master/passCrap)
+php <(curl -s https://raw.githubusercontent.com/webdev23/passCrap/master/passCrap_sqlite)
 
 Dump all passwords from www.mysql-password.com
 * 
