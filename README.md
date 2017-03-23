@@ -24,8 +24,6 @@ Or
 php <(curl -s https://raw.githubusercontent.com/webdev23/passCrap/master/passCrap_sqlite)
 
 Dump all passwords from www.mysql-password.com
-
-* Into a fresh SQLite3 database
 * 
 * REQUIRE: php, php-curl, php-dom, php-sqlite3
 *   
