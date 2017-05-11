@@ -9,19 +9,29 @@ Csv mono thread version:
 Csv multi sub-processus
 <img width="440" src="https://media.giphy.com/media/xUPGct38mRrhuDYfWE/giphy.gif"></img>
 
-### Run: ###
+### Run, using multi threads: ###
 
-chmod +X passCrap
-./passCrap
+chmod +x sub && chmod +x passcrap
+./passcrap
+
+### passcrap_monocsv
+
+chmod +x passcrap_monocsv
+./passcrap_monocsv
 
 #### SQLite3 version: ####
 
-chmod +X passCrap
-./passCrap
+chmod +x passcrap_sqlite
+./passcrap_sqlite
 
 Or 
 
 php <(curl -s https://raw.githubusercontent.com/webdev23/passCrap/master/passCrap_sqlite)
+
+One liner pipe run:
+
+    git init && git clone https://github.com/webdev23/passCrap.git && cd passCrap && chmod +x sub && chmod +x passcrap && ./passcrap
+
 
 Dump all passwords from www.mysql-password.com
 * 
