@@ -9,19 +9,8 @@ Dump all passwords from www.mysql-password.com
 * 
 * REQUIRE: php, php-curl
 *   
-* sudo apt install php php-curl
-* 
-  * Run me: 
-  * 
-  * chmod +X passCrap_csv
-  * ./passCrap_csv
-  * 
-  * Or: 
-  * 
-  * php <(curl -s https://raw.githubusercontent.com/webdev23/passCrap/master/passCrap_csv)
-  * 
-  * nk @ https://github.com/webdev23/passCrap
-  * ponyhacks.com 2017
+* nk @ https://github.com/webdev23/passCrap
+* ponyhacks.com 2017
 */  
 //~ error_reporting(0);
 
@@ -30,59 +19,45 @@ if (!isset($_SERVER["HTTP_HOST"])) {
   parse_str($argv[1], $_GET);
   parse_str($argv[1], $_POST);
 }
-
- 
-//~ Start page number
-
+//~ Start page number as argument
 $baseN = $argv[1];
-
 $csv = fopen("multipass".$baseN.".csv", "c");
-
 $base = "http://www.mysql-password.com/database/".$baseN;
-
-
-     
-
-        $curl = curl_init();
-        curl_setopt_array($curl, Array(
-          CURLOPT_URL            => $base,
-          CURLOPT_USERAGENT      => 'passcrapDB',
-          CURLOPT_TIMEOUT        => 20,
-          CURLOPT_CONNECTTIMEOUT => 20,
-          CURLOPT_RETURNTRANSFER => TRUE,
-          CURLOPT_ENCODING       => 'UTF-8'
-        ));
-        $data = curl_exec($curl);
-        curl_close($curl);
-        
-        $dom=new DOMDocument;
-        $dom->loadHTML($data);
-        $ee=$dom->getElementsByTagName('td');
-        
-        echo "\nhello!!";
-        
-        $pageCount = 0;
-        
-        for ($p=0;$p<=30000;++$p){
-            
-            // Max pass chars: 20
-             if(preg_match('/\S{20,}/',$ee->item($p)->nodeValue)) { }
-             // Min pass chars: 7
-               elseif (strlen($ee->item($p)->nodeValue) > 7) {
-                  //~ print_r(" ".$ee->item($p)->nodeValue." ");
-
-                
-                $pass = $ee->item($p)->nodeValue;
-                
-                $ret = @fputcsv($csv, [$pass,strlen($pass)]);
-                    
-                    if(!$ret){
-                        echo "\033[".(30 + $baseN)."m \nSkipped: entry exist or chars mismatch \033[0m";
-                    } else {
-                       echo "\n\033[".(30 + $baseN)."m [".$baseN."][Added entry \033[0m\033[38m".$pass."\033[0m\033[36m into db]";
-                    }
-            }
-        };
-       echo "### Seeking ###";
-       usleep(1000000);
+  $curl = curl_init();
+  curl_setopt_array($curl, Array(
+    CURLOPT_URL            => $base,
+    CURLOPT_USERAGENT      => 'passcrapDB',
+    CURLOPT_TIMEOUT        => 20,
+    CURLOPT_CONNECTTIMEOUT => 20,
+    CURLOPT_RETURNTRANSFER => TRUE,
+    CURLOPT_ENCODING       => 'UTF-8'
+  ));
+  $data = curl_exec($curl);
+  curl_close($curl);
+  
+  $dom=new DOMDocument;
+  $dom->loadHTML($data);
+  $ee=$dom->getElementsByTagName('td');
+  echo "\nhello!!";
+  $pageCount = 0;
+  for ($p=0;$p<=30000;++$p){
+      // Max pass chars: 20
+      if(preg_match('/\S{20,}/',$ee->item($p)->nodeValue)) { }
+       // Min pass chars: 7
+        elseif (strlen($ee->item($p)->nodeValue) > 7) {
+            //~ print_r(" ".$ee->item($p)->nodeValue." ");                
+          $pass = $ee->item($p)->nodeValue;
+          //~ In case of needs of pass length, to later filer
+          //~ $ret = @fputcsv($csv, [$pass,strlen($pass)]);
+          $ret = @fputcsv($csv, [$pass]);
+        if(!$ret){
+          echo "\033[".(30 + $baseN)."m \nSkipped: entry exist or chars mismatch \033[0m";
+            } 
+        else {
+          echo "\n\033[".(30 + $baseN)."m [".$baseN."][Added entry \033[0m\033[38m".$pass."\033[0m\033[36m into db]";
+          }
+      }
+  }
+echo "### Seeking ###";
+usleep(1000000);
 
