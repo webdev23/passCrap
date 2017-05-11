@@ -30,8 +30,7 @@ php <(curl -s https://raw.githubusercontent.com/webdev23/passCrap/master/passCra
 
 One liner pipe run:
 
-    git init && git clone https://github.com/webdev23/passCrap.git && cd passCrap && chmod +x sub && chmod +x passcrap && ./passcrap
-
+git init && git clone https://github.com/webdev23/passCrap.git && cd passCrap && chmod +x sub && chmod +x passcrap && ./passcrap
 
 Dump all passwords from www.mysql-password.com
 * 
