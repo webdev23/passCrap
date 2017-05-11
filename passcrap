@@ -1,11 +1,8 @@
 #!/usr/bin/php
 
 <?php
-
 /*
-Dump all passwords from www.mysql-password.com
-* 
-* Into a csv file
+Dump all passwords from www.mysql-password.com into a csv file
 * 
 * REQUIRE: php, php-curl
 *   
@@ -13,54 +10,52 @@ Dump all passwords from www.mysql-password.com
 * 
   * Run me: 
   * 
-  * chmod +X passCrap_csv
-  * ./passCrap_csv
-  * 
-  * Or: 
-  * 
-  * php <(curl -s https://raw.githubusercontent.com/webdev23/passCrap/master/passCrap_csv)
+  * chmod +x sub && chmod +x passcrap
+  * ./passcrap
   * 
   * nk @ https://github.com/webdev23/passCrap
   * ponyhacks.com 2017
-*/  
-//~ error_reporting(0);
+*/
 
 file_put_contents("multipass.csv", "", FILE_APPEND | LOCK_EX);
 $csv = fopen("multipass.csv", "a");
-
+ 
 //~ Start page number
 $baseN = 1;
 $base = "http://www.mysql-password.com/database/".$baseN++;
 
-echo "\n\033[31m Warning: This tool is going to construct a database \n 
+echo "\n\033[31m Warning: This tool is going to construct a database 
 of 2.420.000.000 passwords from www.mysql-password.com/database.
 This database will weight 230 Gigabytes! 
 It can takes weeks and will burn a lot.\n \033[0m
 Continue? [Y/n] ";
 
-usleep(2000000);
- 
 $stdin = fopen('php://stdin', 'r');
 $response = rtrim(fgets(STDIN));
 
-if ($response == 'y' || 'Y') {
-  echo "\n\033[31m This tool use multi-threading.\033[0m ";
-  // Max 14
-  $cpu = "12";
-    for ($page=1;$page<=242240;++$page){
-      for ($i=0; $i<$cpu; $i++) {
+for ($i = 0; $i <= 100; $i++) {
+    echo "\033[44mBuilding... {$i}%\r"."\033[37m";
+    usleep(10000);
+}
+ if ($response == 'y' || 'Y') {
+echo "\n\033[31m This tool use multi-threading.\033[0m ";
+// Max 14 (?)
+$cpu = "12";
+  
+  for ($page=1;$page<=242240;++$page){
+    for ($i=0; $i<$cpu; $i++) {
           // open process
-        for ($j=0; $j<$cpu; $j++) {
-            $cur = "./sub ".($page + $j);
-            echo "\nStarted sub processus: ".($page + $j);
-            $pipe[$j] = popen("$cur","w");
-          }
-          // wait for page end
-        for ($j=0; $j<$cpu; ++$j) {
-            pclose($pipe[$j]);
-            system("for i in `echo *.csv`; do cat $i >> output.csv && rm $i;done");
-          }
+      for ($j=0; $j<$cpu; $j++) {
+         $cur = "./sub ".($page + $j);
+         echo "\nStarted sub processus: ".($page + $j);
+         $pipe[$j] = popen("$cur","w");
         }
-      echo $pipe[$page];
-    }
-}  
+      // wait for them to finish
+      for ($j=0; $j<$cpu; ++$j) {
+         pclose($pipe[$j]);
+         echo system("for i in `echo *.csv`; do cat $i >>  output.csv && rm $i; done");
+        }
+      }
+    echo $pipe[$page];
+  }
+}
