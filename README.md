@@ -30,7 +30,7 @@ Csv multi sub-processus<br>
 
 Dump all passwords from www.mysql-password.com
 
-* REQUIRE: php, php-curl, php-dom, php-sqlite3
+* REQUIRE: php, php-curl, php-xml, php-sqlite3
 * sudo apt install php php-curl php-xml php-sqlite3
 
   
