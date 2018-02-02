@@ -7,7 +7,7 @@ Dump all passwords from www.mysql-password.com
 * 
 * Into a csv file
 * 
-* REQUIRE: php, php-curl
+* REQUIRE: php7.2, php-curl, php7.2-xml
 *   
 * nk @ https://github.com/webdev23/passCrap
 * ponyhacks.com 2017
